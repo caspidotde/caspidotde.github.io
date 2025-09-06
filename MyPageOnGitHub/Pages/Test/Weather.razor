@@ -3,6 +3,7 @@
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
+@inject ILogger<Weather> Logger
 
 <PageTitle>Weather</PageTitle>
 
@@ -64,6 +65,7 @@ else
 
     private void DownloadExcelFile()
     {
+        Logger.LogInformation("DownloadExcelFile");
         List<WeatherForecast> liste = (forecasts != null) ? forecasts.ToList() : new List<WeatherForecast>();
         var excelBytes = ExcelService.GenerateExcelWorkbook<WeatherForecast>(liste);
         JsRuntime.InvokeVoidAsync("saveAsFile", $"Liste_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx", Convert.ToBase64String(excelBytes));
