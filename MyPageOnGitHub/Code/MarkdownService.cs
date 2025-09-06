@@ -5,7 +5,8 @@ namespace MyPageOnGitHub.Code;
 public enum MarkdownResourceType : byte
 {
     Blog,
-    Programming
+    Programming,
+    Songs
 }
 
 public interface IMarkdownService
@@ -20,13 +21,15 @@ public class MarkdownService: IMarkdownService
         var resourceDirectory = resourceType switch
         { 
             MarkdownResourceType.Blog => "Blog",
-            MarkdownResourceType.Programming => "Programming"
+            MarkdownResourceType.Programming => "Programming",
+            MarkdownResourceType.Songs => "Songs"
         };
 
         var resourceName = resourceType switch
         {
             MarkdownResourceType.Blog => "Blog001_index",
             MarkdownResourceType.Programming => "Programming001_index",
+            MarkdownResourceType.Songs => "Songs001_index",
             _ => throw new ArgumentOutOfRangeException(nameof(resourceType), resourceType, $"Unknown {nameof(MarkdownResourceType)}: {resourceType}")
         };
 

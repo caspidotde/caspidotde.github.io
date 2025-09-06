@@ -14,6 +14,7 @@
   <ItemGroup>
     <EmbeddedResource Include="BlogContents\Blog\Blog001_index.md" />
     <EmbeddedResource Include="BlogContents\Programming\Programming001_index.md" />
+    <EmbeddedResource Include="BlogContents\Songs\Songs001_index.md" />
   </ItemGroup>
 
   <ItemGroup>

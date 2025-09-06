@@ -1,7 +1,28 @@
 ﻿@page "/"
+@inject HttpClient Http
+@inject NavigationManager Navigation
 
 <PageTitle>.NET net nett</PageTitle>
 
-<h1>Some examples</h1>
+<h1>@counter</h1>
+
+@code
+{
+    private int counter = 10;
+
+    protected override async Task OnInitializedAsync()
+    {
+        while (counter > 0)
+        {
+            counter--;
+            StateHasChanged();
+            await Task.Delay(1000);
+        }
+
+        // Navigation.NavigateTo("songs");
+
+
+    }
+}
 
 
