@@ -7,10 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="BlogContents\Blog\Blog001_index.md" />
+    <None Remove="BlogContents\Programming\Programming001_index.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="BlogContents\Blog\Blog001_index.md" />
+    <EmbeddedResource Include="BlogContents\Programming\Programming001_index.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.8" PrivateAssets="all" />
     <PackageReference Include="MudBlazor" Version="8.12.0" />
+    <PackageReference Include="MudBlazor.Markdown" Version="8.11.0" />
   </ItemGroup>
 
 </Project>

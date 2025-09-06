@@ -1,0 +1,69 @@
+﻿@using Markdig.Syntax.Inlines
+@using MyPageOnGitHub.Code
+<MudMarkdown 
+	Value="@Value"
+	Styling="Styling"
+	Props="Props"
+	HasTableOfContents="HasTableOfContents"
+	TableOfContentsHeader="Table of contents" />
+
+@code
+{
+	[Parameter]
+	public MarkdownResourceType MarkdownResource { get; set; }
+
+	[Parameter]
+	public bool HasTableOfContents { get; set; }
+
+	[Inject]
+	private IMarkdownService MarkdownService { get; init; } = null!;
+
+	private string Value { get; set; } = string.Empty;
+
+	private MudMarkdownStyling Styling { get; } = new()
+	{
+		Table =
+		{
+			CellMinWidth = 100,
+		},
+		CodeBlock =
+		{
+			Theme = CodeBlockTheme.A11yDark,
+			CopyButton = CodeBlockCopyButton.Sticky,
+			CopyButtonText = "Cooooppppyyyy",
+		},
+	};
+
+	private MudMarkdownProps Props { get; } = new()
+	{
+		Link =
+		{
+			OverrideUrl = OverrideUrl,
+		},
+		Heading =
+		{
+			OverrideTypo = OverrideTypo,
+		},
+	};
+
+	protected override async Task OnInitializedAsync()
+	{
+		Value = await MarkdownService.GetBlogEntryAsync(MarkdownResource)
+			.ConfigureAwait(false);
+	}
+
+
+	/// <remarks>
+	/// replaces all h1 tags with h4
+	/// </remarks>
+	private static Typo OverrideTypo(Typo x)
+	{
+		return x == Typo.h1 ? Typo.h4 : x;
+	}
+
+	private static string? OverrideUrl(LinkInline x)
+	{
+		return x.Url;
+	}
+
+}
