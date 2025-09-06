@@ -4,14 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>caspidotde</title>
+    <title>.NET net nett</title>
     <base href="/" />
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link href="MyPageOnGitHub.styles.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <link href="@Assets["_content/MudBlazor/MudBlazor.min.css"]" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="caspi_eyes.png" />
+    <link href="MyPageOnGitHub.styles.css" rel="stylesheet" />    
+    <link href="_content/MudBlazor/MudBlazor.min.css?v=1" rel="stylesheet" />
 </head>
 
 <body>
@@ -29,7 +28,16 @@
         <span class="dismiss">🗙</span>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
-    <script src="@Assets["_content/MudBlazor/MudBlazor.min.js"]"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="js/helpers.js"></script>
+    <script>
+        window.getWindowDimensions = function () {
+            return {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+        };        
+    </script>
 </body>
 
 </html>

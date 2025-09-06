@@ -1,5 +1,8 @@
-﻿@page "/weather"
+﻿@page "/test/weather"
+@using MyPageOnGitHub.Code
+
 @inject HttpClient Http
+@inject IJSRuntime JsRuntime
 
 <PageTitle>Weather</PageTitle>
 
@@ -34,6 +37,10 @@ else
             }
         </tbody>
     </table>
+    @if (forecasts != null)
+    {
+        <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.SaveAs" OnClick="@DownloadExcelFile" />
+    }
 }
 
 @code {
@@ -53,5 +60,12 @@ else
         public string? Summary { get; set; }
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+
+    private void DownloadExcelFile()
+    {
+        List<WeatherForecast> liste = (forecasts != null) ? forecasts.ToList() : new List<WeatherForecast>();
+        var excelBytes = ExcelService.GenerateExcelWorkbook<WeatherForecast>(liste);
+        JsRuntime.InvokeVoidAsync("saveAsFile", $"Liste_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx", Convert.ToBase64String(excelBytes));
     }
 }
