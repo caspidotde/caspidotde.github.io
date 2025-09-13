@@ -1,86 +1,40 @@
-# [Indented code block](https://github.com/MyNihongo/MudBlazor.Markdown/issues/294)
-    if
-    {
-        return;
-    }
+## Some examples
 
-# [Unknown language - Razor](https://github.com/MyNihongo/MudBlazor.Markdown/issues/260)
-```razor
-@page
-@model IndexModel
-@{
-    ViewData["Title"] = "Home Page";
-}
+#### Register a new Hue application and get the app key
+###### using Q42.HueApi (thanks to Michiel Post - https://github.com/michielpost/Q42.HueApi)
 
-<h2>@ViewData["Title"]</h2>
-```
+````csharp
+using Microsoft.Extensions.Configuration;
+using Q42.HueApi;
+using Q42.HueApi.Interfaces;
 
-# [Nested text](https://github.com/MyNihongo/MudBlazor.Markdown/issues/233)
-> To prevent the warning message regarding the deprecation of the `mysql_native_password` plugin from being logged, you have a couple of options:
-> 
-> Option 1: Update User Authentication Method:
-> 
-> 1. Connect to your MySQL server using a MySQL client, such as the `mysql` command-line tool:
->    ```bash
->    mysql -u username -p
->    ```
-> 
-> 2. Once connected, run the following command to alter the user's authentication method:
->    ```sql
->    ALTER USER 'username'@'hostname' IDENTIFIED WITH caching_sha2_password;
->    ```
->    Replace `'username'` with the actual username and `'hostname'` with the appropriate hostname or IP address. If you want to update for all users, replace `'username'@'hostname'` with `'*'@'%'`.
-> 
-> 3. Repeat this process for each user on your MySQL server.
+IConfiguration configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .Build();
 
-# [Table in list](https://github.com/MyNihongo/MudBlazor.Markdown/issues/144)
-## Prereq
-The following requirements must be met outside this Terraform code in advance.
+string ip = configuration.GetValue<string>("appSettings:HueBridgeIp")!;
+string appName = configuration.GetValue<string>("appSettings:HueAppName")!;
+string deviceName = configuration.GetValue<string>("appSettings:HueDeviceName")!;
 
-1. Created a new resource group..
-2. Created a new AAD group using naming convention..
-3. Created a new AAD group using naming convention..
-4. Created a separate storage account..
-5. Created a new app registration..
+ILocalHueClient localHueClient = new LocalHueClient(ip);
+string? appKey = await localHueClient.RegisterAsync(appName, deviceName);
 
-  |Permission | Type | Granted Through|
-  |--|--|--|
-  |User.Read | Delegated | Admin consent|
-  | User.ReadBasic.All |Delegated| Admin consent|
-  |User.Read.All|Delegated| Admin consent|
-  |Directory.Read.Alll|Delegated| Admin consent|
-  |Directory.AccessAsUser.All|Delegated| Admin consent|
-  |User.Invite.All|Application| Admin consent|
-  |Directory.Read.All|Application| Admin consent|
-  |User.Read.All|Application| Admin consent|
-  - Granted permissions User.Invite.All and GroupMember.ReadWrite.All. Admin consent has been granted
+Console.WriteLine($"AppKey: {appKey}");
+````
 
-6. Create a new app registration..
-7. Created the key vault..
-8. Created secrets..
+#### Huetility - Example to turn on a light
+###### using HueApi V2 (thanks to Michiel Post - https://github.com/michielpost/Q42.HueApi)
+````csharp
+LocalHueApi client = new LocalHueApi(Model.BridgeIP, Model.AppKey);
+var Lights = await client.GetLightsAsync();
+...
+var light = Lights.Data.FirstOrDefault(l => l.Metadata.Name == "Hue white lamp 1");
+var req = new UpdateLight();
 
-# [Table (not indented) in list](https://github.com/MyNihongo/MudBlazor.Markdown/issues/145)
-## Prereq
-The following requirements must be met outside this Terraform code in advance.
+if (light.On.IsOn)
+    req.TurnOff();
+else
+    req.TurnOn();
 
-1. Created a new resource group..
-2. Created a new AAD group using naming convention..
-3. Created a new AAD group using naming convention..
-4. Created a separate storage account..
-5. Created a new app registration..
-
-|Permission | Type | Granted Through|
-|--|--|--|
-|User.Read | Delegated | Admin consent|
-| User.ReadBasic.All |Delegated| Admin consent|
-|User.Read.All|Delegated| Admin consent|
-|Directory.Read.Alll|Delegated| Admin consent|
-|Directory.AccessAsUser.All|Delegated| Admin consent|
-|User.Invite.All|Application| Admin consent|
-|Directory.Read.All|Application| Admin consent|
-|User.Read.All|Application| Admin consent|
-- Granted permissions User.Invite.All and GroupMember.ReadWrite.All. Admin consent has been granted
-
-6. Create a new app registration..
-7. Created the key vault..
-8. Created secrets..
+var result = await client.UpdateLightAsync(light.Id, req);
+````

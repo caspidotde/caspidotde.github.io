@@ -4,7 +4,17 @@
 
 <PageTitle>.NET net nett</PageTitle>
 
-<h1>@counter</h1>
+@if (counter > 0)
+{
+    <h1>Redirecting in @counter</h1>
+}
+else
+{
+    <h1>Redirecting now...</h1>
+    <p><a href="help">Click here if you are not redirected.</a></p>
+    Navigation.NavigateTo("help");
+}
+
 
 @code
 {
@@ -14,9 +24,9 @@
     {
         while (counter > 0)
         {
-            counter--;
+            counter--;            
+            await Task.Delay(TimeSpan.FromSeconds(1));
             StateHasChanged();
-            await Task.Delay(1000);
         }
 
         // Navigation.NavigateTo("songs");

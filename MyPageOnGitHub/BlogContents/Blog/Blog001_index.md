@@ -1,23 +1,12 @@
-# Heading 1
-## Heading 2
-### Heading 3
-#### Heading 4
-##### Heading 5
-###### Heading 6
-
-Some regular text. *Text in italics*, **text in bold** and ~~text in strikethrough~~.
-**Bold and *italics within***.
-*Italics and **bold within***.
-It is possible to `highlight some code`.
-*~Invalid **or** unknown~ markdown is shown as it is*.
 
 
-#### Inline
-$x = \frac{1}{2}$
-$ax^2$
-$\sqrt {2}$
+## Prologue
 
-#### Centered
-$$x = \frac{1}{2}$$
-$$ax^2$$
-$$\sqrt {2}$$
+````markdown
+Electricity flows with the very first code
+Like a break in the clouds and the first ray of sun
+I can feel it inside something new has begun 
+And it's taking control of my body and mind
+It began when I wrote "Hello World"
+````
+
