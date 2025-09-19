@@ -4,11 +4,16 @@
 @inject ILoggerFactory LoggerFactory
 @inject NavigationManager NavigationManager
 
+<MudStack Row="true">
+    <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ChevronLeft" OnClick="GoBack" />
+    <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ChevronRight" OnClick="GoForward" />
+</MudStack>
+
 <MarkdownPage MarkdownResource="@ResourceType" ItemIndex="@Index" />
 
 <MudStack Row="true">
-    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleLeft" OnClick="GoBack" />
-    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleRight" OnClick="GoForward" />
+    <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleLeft" OnClick="GoBack" />
+    <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleRight" OnClick="GoForward" />
 </MudStack>
 
 @code
@@ -21,7 +26,7 @@
 
     private void GoBack()
     {
-        if (Index > 2)
+        if (Index > 1)
         {
             Index--;
             NavigationManager.NavigateTo($"/{Type}/{Index}", false);
