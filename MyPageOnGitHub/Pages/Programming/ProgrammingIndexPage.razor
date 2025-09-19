@@ -1,5 +1,18 @@
-﻿@page "/programming"
+﻿@page "/programming/{Index:int?}"
+
 @using MyPageOnGitHub.BlogContents
 @using MyPageOnGitHub.Code
 
-<MarkdownPage MarkdownResource="MarkdownResourceType.Programming" />
+@inject ILoggerFactory LoggerFactory
+@inject NavigationManager NavigationManager
+
+<TemplateIndexPage 
+    Type="programming" 
+    ResourceType="MarkdownResourceType.Programming" 
+    Index="@Index" />
+
+@code
+{
+    [Parameter]
+    public int Index { get; set; } = 0;
+}

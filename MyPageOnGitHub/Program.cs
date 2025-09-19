@@ -12,7 +12,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // Logger, IConfiguration etc.
 builder.AddCore();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped(
+    sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 builder.Services.AddMudServices();
 

@@ -12,9 +12,8 @@ else
 {
     <h1>Redirecting now...</h1>
     <p><a href="help">Click here if you are not redirected.</a></p>
-    Navigation.NavigateTo("help");
+    Navigation.NavigateTo("programming/1");
 }
-
 
 @code
 {
@@ -28,10 +27,6 @@ else
             await Task.Delay(TimeSpan.FromSeconds(1));
             StateHasChanged();
         }
-
-        // Navigation.NavigateTo("songs");
-
-
     }
 }
 

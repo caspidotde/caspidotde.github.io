@@ -1,0 +1,38 @@
+﻿@page "/songsold/{Index:int?}"
+
+@using MyPageOnGitHub.BlogContents
+@using MyPageOnGitHub.Code
+
+@inject ILoggerFactory LoggerFactory
+@inject NavigationManager NavigationManager
+
+<MarkdownPage MarkdownResource="MarkdownResourceType.Songs" ItemIndex="@Index"/>
+
+<MudStack Row="true">
+    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleLeft" OnClick="GoBack" />
+    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleRight" OnClick="GoForward" />
+</MudStack>
+
+@code
+{
+    [Parameter]
+    public int Index { get; set; } = 0;
+
+    private ILogger Logger => LoggerFactory.CreateLogger<SongsIndexPageOld>();
+
+    private void GoBack()
+    {
+        if (Index > 0)
+        {
+            Index--;
+            NavigationManager.NavigateTo($"/song/{Index}", false);
+        }
+    }
+
+    private void GoForward()
+    {
+        Index++;
+        if (Index > 999) Index = 1;
+        NavigationManager.NavigateTo($"/song/{Index}", false);
+    }
+}

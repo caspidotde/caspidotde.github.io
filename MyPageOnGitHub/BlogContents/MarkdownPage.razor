@@ -1,5 +1,8 @@
 ﻿@using Markdig.Syntax.Inlines
 @using MyPageOnGitHub.Code
+
+@inject ILoggerFactory LoggerFactory
+
 <MudMarkdown 
 	Value="@Value"
 	Styling="Styling"
@@ -13,12 +16,17 @@
 	public MarkdownResourceType MarkdownResource { get; set; }
 
 	[Parameter]
+	public int ItemIndex { get; set; }
+
+	[Parameter]
 	public bool HasTableOfContents { get; set; }
 
 	[Inject]
 	private IMarkdownService MarkdownService { get; init; } = null!;
 
 	private string Value { get; set; } = string.Empty;
+
+    private ILogger Logger => LoggerFactory.CreateLogger<MarkdownPage>();
 
 	private MudMarkdownStyling Styling { get; } = new()
 	{
@@ -46,11 +54,15 @@
 		},
 	};
 
-	protected override async Task OnInitializedAsync()
+	protected override async Task OnParametersSetAsync()
 	{
-		Value = await MarkdownService.GetBlogEntryAsync(MarkdownResource)
+        Logger.LogInformation(
+			"Loading markdown resource {MarkdownResource} index {ItemIndex}", 
+			MarkdownResource, ItemIndex);
+
+		Value = await MarkdownService.GetBlogEntryAsync(MarkdownResource, ItemIndex)
 			.ConfigureAwait(false);
-	}
+    }
 
 
 	/// <remarks>

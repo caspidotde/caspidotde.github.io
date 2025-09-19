@@ -16,7 +16,7 @@ public static class CoreExtension
             .AddJsonFile($"appsettings.json")
             .Build();
 
-        @this.Configuration.AddConfiguration(configuration);
+        @this.Configuration.AddConfiguration(configuration);        
 
         return @this;
     }

@@ -12,8 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="BlogContents\Blog\Blog002_index.md" />
     <EmbeddedResource Include="BlogContents\Blog\Blog001_index.md" />
     <EmbeddedResource Include="BlogContents\Help\Help001_index.md" />
+    <EmbeddedResource Include="BlogContents\Programming\Programming002_index.md" />
     <EmbeddedResource Include="BlogContents\Programming\Programming001_index.md" />
     <EmbeddedResource Include="BlogContents\Songs\Songs001_index.md" />
   </ItemGroup>
