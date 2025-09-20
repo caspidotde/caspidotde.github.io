@@ -12,6 +12,22 @@
     <link href="MyPageOnGitHub.styles.css" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css?v=1" rel="stylesheet" />
     <link href="_content/MudBlazor.Markdown/MudBlazor.Markdown.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        (function (l) {
+            if (l.search) {
+                var q = {};
+                l.search.slice(1).split('&').forEach(function (v) { var a = v.split('='); q[a[0]] = a.slice(1).join('='); });
+                if (q.p !== undefined) {
+                    console.log('Redirecting to /' + q.p);
+                    window.history.replaceState(null, null,
+                        l.pathname.slice(0, -1) + (l.pathname.endsWith('/') ? '' : '/') + q.p +
+                        (q.q !== undefined ? ('?' + q.q.replace(/~and~/g, '&')) : '') +
+                        l.hash
+                    );
+                }
+            })
+        }(window.location));
+    </script>
 </head>
 
 <body>
