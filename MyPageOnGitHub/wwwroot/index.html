@@ -26,7 +26,8 @@
                 if (q.p !== undefined) {
                     console.log('Redirecting to /' + q.p);
                     window.history.replaceState(null, null,
-                        l.pathname.slice(0, -1) + (l.pathname.endsWith('/') ? '' : '/') + q.p +
+                        l.pathname.slice(0, -1) +
+                        (l.pathname.endsWith('/') ? '' : '/') + q.p +
                         (q.q !== undefined ? ('?' + q.q.replace(/~and~/g, '&')) : '') +
                         l.hash
                     );
