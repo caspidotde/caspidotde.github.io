@@ -5,24 +5,26 @@
 
 <h1>Contents</h1>
 
-<MudList T="string">
     @foreach (var node in Tree.Nodes)
     {
-        <MudListItem Icon="@Icons.Material.Filled.Inbox" Text="@node.Name" Expanded>
-            <NestedList>
-                @foreach (var child in node.Children)
-                {
-                    var link = $"{child.Category}/{child.Index}";
-                    <MudListItem 
-                        Icon="@Icons.Material.Filled.Article" 
-                        Text="@($"{child.Index.ToString("D3")} - {child.Title}")"
-                        Href="@link">            
-                    </MudListItem>
-                }
-            </NestedList>
-        </MudListItem>
+            <MudPaper Class="pa-4 ma-2">
+                <MudList T="string">
+                    <MudListSubheader>
+                        <MudText Typo="Typo.h5">@node.Name</MudText>                        
+                    </MudListSubheader>
+                    @foreach (var child in node.Children)
+                    {
+                        var link = $"{child.Category}/{child.Index}";
+                        <MudListItem Expanded
+                                     Icon="@Icons.Material.Filled.Article"
+                                     Text="@($"{child.Index.ToString("D3")} - {child.Title}")"
+                                     Href="@link">
+                        </MudListItem>
+                    }
+                </MudList>
+            </MudPaper>
     }
-</MudList>
+
 
 @code
 {
