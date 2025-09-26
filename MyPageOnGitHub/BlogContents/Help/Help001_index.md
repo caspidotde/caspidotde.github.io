@@ -1,3 +1,5 @@
+<!-- Help -->
+
 : # Markdown and LaTeX examples
 
 # Heading 1

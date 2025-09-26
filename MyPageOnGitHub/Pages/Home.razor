@@ -1,32 +1,38 @@
 ﻿@page "/"
-@inject HttpClient Http
-@inject NavigationManager Navigation
+@inject IMarkdownService MarkdownService
 
 <PageTitle>.NET net nett</PageTitle>
 
-@if (counter > 0)
-{
-    <h1>Redirecting in @counter</h1>
-}
-else
-{
-    <h1>Redirecting now...</h1>
-    <p><a href="help">Click here if you are not redirected.</a></p>
-    Navigation.NavigateTo("programming/1");
-}
+<h1>Contents</h1>
+
+<MudList T="string">
+    @foreach (var node in Tree.Nodes)
+    {
+        <MudListItem Icon="@Icons.Material.Filled.Inbox" Text="@node.Name" Expanded>
+            <NestedList>
+                @foreach (var child in node.Children)
+                {
+                    var link = $"{child.Category}/{child.Index}";
+                    <MudListItem 
+                        Icon="@Icons.Material.Filled.Article" 
+                        Text="@($"{child.Index.ToString("D3")} - {child.Title}")"
+                        Href="@link">            
+                    </MudListItem>
+                }
+            </NestedList>
+        </MudListItem>
+    }
+</MudList>
 
 @code
 {
-    private int counter = 10;
+    ContentTree Tree { get; set; } = new ContentTree();
 
     protected override async Task OnInitializedAsync()
     {
-        while (counter > 0)
-        {
-            counter--;            
-            await Task.Delay(TimeSpan.FromSeconds(1));
-            StateHasChanged();
-        }
+        // await Task.Delay(TimeSpan.FromSeconds(1));
+        Tree = await MarkdownService.GetContentTree();
+        StateHasChanged();
     }
 }
 

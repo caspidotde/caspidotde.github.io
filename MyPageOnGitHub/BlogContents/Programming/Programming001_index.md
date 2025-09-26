@@ -1,3 +1,5 @@
+<!-- Register a new Hue application -->
+
 #### Register a new Hue application and get the app key
 ###### using Q42.HueApi (thanks to Michiel Post - https://github.com/michielpost/Q42.HueApi)
 
