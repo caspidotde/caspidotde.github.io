@@ -15,7 +15,7 @@
                         <MudText Typo="Typo.h5">@node.Name</MudText>                        
                     </MudListSubheader>
 
-                    anzahl = 0;
+                    @anzahl = 0;
                     @foreach (var child in node.Children.OrderByDescending(x => x.Index))
                     {
                         anzahl++;
