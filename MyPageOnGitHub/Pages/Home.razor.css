@@ -1,0 +1,8 @@
+﻿
+::deep .mud-timeline-item-content {
+    max-width: calc(70%-48px) !important;
+}
+
+::deep .mud-timeline-item-opposite {
+    max-width: calc(30%-48px) !important;
+}

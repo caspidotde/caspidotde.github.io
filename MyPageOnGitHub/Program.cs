@@ -15,11 +15,13 @@ builder.Logging
     // .AddFilter("Microsoft", LogLevel.Information)
     .AddFilter("System.Net.Http.HttpClient", LogLevel.Warning);
 
+/*
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile($"appsettings.json")
     .Build();
 
 builder.Configuration.AddConfiguration(configuration);
+*/
 
 builder.Services.AddScoped(
     sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
