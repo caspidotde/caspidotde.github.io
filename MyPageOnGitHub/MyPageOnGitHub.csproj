@@ -7,6 +7,8 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="BlogContents\CSharp\CSharp001_index.md" />
+		<EmbeddedResource Include="BlogContents\Gupta\Gupta001_index.md" />
 		<EmbeddedResource Include="BlogContents\Help\Help001_index.md" />
 		<EmbeddedResource Include="BlogContents\Blog\Blog001_index.md" />
 		<EmbeddedResource Include="BlogContents\Blog\Blog002_index.md" />

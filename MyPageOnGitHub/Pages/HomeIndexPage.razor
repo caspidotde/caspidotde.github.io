@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@inject NavigationManager NavigationManager
+
 <PageTitle>.NET net nett</PageTitle>
 
 <div>
@@ -26,10 +28,18 @@
                         <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
                             <MudText Typo="Typo.body1">Gupta Team Developer 7.x</MudText>
                             <MudText Typo="Typo.overline">low-code software development tool</MudText>
+                            @*
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GoToGupta" Size="Size.Small">
+                                <MudText Typo="Typo.overline">Mehr zu Gupta</MudText>
+                            </MudButton>
+                            *@
                         </MudAlert>
                         <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
                             <MudText Typo="Typo.body1">C#: Web API und Webapplikation, Import/Export zu anderen Systemen</MudText>
-                            <MudText Typo="Typo.overline">Blazor, Razor Pages, ASP.NET MVC, SignalR, CQRS, OpenTelemetry, OpenAPI</MudText>
+                            <MudText Typo="Typo.overline">Blazor, Razor Pages, ASP.NET MVC, SignalR, CQRS, OpenTelemetry, OpenAPI</MudText>                            
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GoToCSharp" Size="Size.Small">
+                                <MudText Typo="Typo.overline">Mehr zu C#</MudText>
+                            </MudButton>
                         </MudAlert>
                         <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
                             <MudText Typo="Typo.body1">Datenbank: MS SQL</MudText>
@@ -37,8 +47,9 @@
                         </MudAlert>
                         <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
                             <MudText Typo="Typo.body1">Web-Server: Linux + Windows Server</MudText>
-                            <MudText Typo="Typo.overline">Windows Server mit IIS</MudText>
-                            <MudText Typo="Typo.overline">Linux mit Docker + traefik Proxy mit Nginx/PHP/... für Fremdsoftware</MudText>
+                            <MudText Typo="Typo.overline">
+                                Windows Server mit IIS, Linux mit Docker + traefik Proxy mit Nginx/PHP/etc.
+                            </MudText>
                         </MudAlert>
                         <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
                             <MudText Typo="Typo.body1">PHP, JavaScript: Support für Fremdsoftware</MudText>
@@ -91,3 +102,16 @@
     </MudTimelineItem>    
 </MudTimeline>
 </div>
+
+@code {
+
+    void GoToGupta()
+    {
+        NavigationManager.NavigateTo("gupta");
+    }
+
+    void GoToCSharp()
+    {
+        NavigationManager.NavigateTo("csharp");
+    }
+}

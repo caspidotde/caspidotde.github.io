@@ -1,0 +1,15 @@
+﻿@page "/csharp/{Index:int?}"
+
+@using MyPageOnGitHub.BlogContents
+@using MyPageOnGitHub.Code
+
+<TemplateIndexPage 
+    Type="csharp"
+    ResourceType="MarkdownResourceType.CSharp"
+    Index="@Index" />
+
+@code
+{
+    [Parameter]
+    public int Index { get; set; } = 0;
+}

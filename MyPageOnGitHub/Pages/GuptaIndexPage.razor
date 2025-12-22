@@ -1,0 +1,15 @@
+﻿@page "/gupta/{Index:int?}"
+
+@using MyPageOnGitHub.BlogContents
+@using MyPageOnGitHub.Code
+
+<TemplateIndexPage 
+    Type="gupta"
+    ResourceType="MarkdownResourceType.Gupta"
+    Index="@Index" />
+
+@code
+{
+    [Parameter]
+    public int Index { get; set; } = 0;
+}
