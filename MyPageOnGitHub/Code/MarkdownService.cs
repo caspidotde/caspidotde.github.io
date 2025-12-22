@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
-using DocumentFormat.OpenXml.Office.CustomUI;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace MyPageOnGitHub.Code;
 

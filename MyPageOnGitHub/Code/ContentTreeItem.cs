@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
-
-namespace MyPageOnGitHub.Code;
+﻿namespace MyPageOnGitHub.Code;
 
 public class ContentTreeItem
 {
