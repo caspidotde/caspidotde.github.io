@@ -1,8 +1,14 @@
 ﻿
-::deep .mud-timeline-item-content {
-    max-width: calc(70%-48px) !important;
+
+::deep .mud-timeline-vertical .mud-timeline-item .mud-timeline-item-content {
+    max-width: calc(70% - 48px);
 }
 
-::deep .mud-timeline-item-opposite {
-    max-width: calc(30%-48px) !important;
+::deep .mud-timeline-vertical .mud-timeline-item .mud-timeline-item-opposite {
+    max-width: calc(30% - 48px);
+}
+
+::deep .mud-timeline-vertical.mud-timeline-position-alternate::before {
+    left: auto;
+    right: calc(70% - 1px);
 }
