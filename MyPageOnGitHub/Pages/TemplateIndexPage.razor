@@ -1,0 +1,42 @@
+﻿@using MyPageOnGitHub.BlogContents
+@using MyPageOnGitHub.Code
+
+@inject ILoggerFactory LoggerFactory
+@inject NavigationManager NavigationManager
+
+<MudStack Row="true">
+    <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ChevronLeft" OnClick="GoBack" />
+    <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ChevronRight" OnClick="GoForward" />
+</MudStack>
+
+<MarkdownPage MarkdownResource="@ResourceType" ItemIndex="@Index" />
+
+<MudStack Row="true">
+    <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleLeft" OnClick="GoBack" />
+    <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleRight" OnClick="GoForward" />
+</MudStack>
+
+@code
+{
+    [Parameter] public int Index { get; set; } = 1;
+    [Parameter] public string Type { get; set; } = "blog";
+    [Parameter] public MarkdownResourceType ResourceType { get; set; } = MarkdownResourceType.Blog;
+
+    private ILogger Logger => LoggerFactory.CreateLogger<TemplateIndexPage>();
+
+    private void GoBack()
+    {
+        if (Index > 1)
+        {
+            Index--;
+            NavigationManager.NavigateTo($"/{Type}/{Index}", false);
+        }
+    }
+
+    private void GoForward()
+    {
+        Index++;
+        if (Index > 999) Index = 1;
+        NavigationManager.NavigateTo($"/{Type}/{Index}", false);
+    }
+}
