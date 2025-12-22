@@ -12,14 +12,32 @@
             <MudText Color="Color.Dark" Typo="Typo.body2">Softwareentwicklung rund um Pannenhilfe Service</MudText>
         </ItemOpposite>
         <ItemContent>
-            <MudText Color="Color.Dark" Typo="Typo.h6" GutterBottom="true">Schwerpunkte: Kunden- und Auftragsverwaltung, Schnittstellenprogrammierung</MudText>
-            <MudText Typo="Typo.body1">Gupta Team Developer 7.x</MudText>
-            <MudText Typo="Typo.body1">C#: Web API und Webapplikation, Import/Export zu anderen Systemen</MudText>
-            <MudText Typo="Typo.overline">- Blazor, Razor Pages, ASP.NET MVC, SignalR, CQRS, OpenTelemetry, OpenAPI</MudText>
-            <MudText Typo="Typo.body1">Datenbank: MS SQL</MudText>
-            <MudText Typo="Typo.body1">Linux: Docker + traefik Proxy mit Nginx/PHP/... für versch. Fremdsoftware</MudText>
-            <MudText Typo="Typo.body1">PHP, JavaScript: Support für Fremdsoftware</MudText>
-            <MudText Typo="Typo.overline">- WordPress, Drupal, xt-Commerce/modified eCommerce</MudText>
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Kunden- und Auftragsverwaltung, Schnittstellenprogrammierung</MudText>
+                            <MudText Typo="Typo.body2"></MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.CarRepair" Color="Color.Default" />
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.body1">Gupta Team Developer 7.x</MudText>
+                        <MudText Typo="Typo.body1">C#: Web API und Webapplikation, Import/Export zu anderen Systemen</MudText>
+                        <MudText Typo="Typo.overline">- Blazor, Razor Pages, ASP.NET MVC, SignalR, CQRS, OpenTelemetry, OpenAPI</MudText>
+                        <MudText Typo="Typo.body1">Datenbank: MS SQL</MudText>
+                        <MudText Typo="Typo.body1">Linux: Docker + traefik Proxy mit Nginx/PHP/... für Fremdsoftware</MudText>
+                        <MudText Typo="Typo.body1">PHP, JavaScript: Support für Fremdsoftware</MudText>
+                        <MudText Typo="Typo.overline">- WordPress, Drupal, xt-Commerce/modified eCommerce</MudText>
+                    </MudCardContent>
+                    @*
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">Learn more</MudButton>
+                    </MudCardActions>
+                    *@
+                </MudCard>
+            
         </ItemContent>
     </MudTimelineItem>
     <MudTimelineItem Color="Color.Default" Variant="Variant.Filled" Elevation="25" TimelineAlign="TimelineAlign.End">
@@ -28,11 +46,29 @@
             <MudText Color="Color.Dark" Typo="Typo.body2">Softwareentwicklung für med. Labore</MudText>
         </ItemOpposite>
         <ItemContent>
-                <MudText Color="Color.Dark" Typo="Typo.h6" GutterBottom="true">Schwerpunkte: Schlaflabore und Labore für Blutuntersuchung</MudText>
-            <MudText Typo="Typo.body1">Centura Team Developer 1.x-3.x</MudText>
-            <MudText Typo="Typo.body1">Datenbank: Informix + DB2</MudText>
-            <MudText Typo="Typo.body1">Perl: Import/Export/Extrahieren von Daten und Programmierung für Nadel- und PostScript-Drucker</MudText>
-            <MudText Typo="Typo.body1">C: serielle Anbindung an Laborgeräte</MudText>
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Schlaflabore und Labore für Blutuntersuchung</MudText>
+                            <MudText Typo="Typo.body2">DRG, LDT, Lesegerät für KVK, ...</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.MedicalServices" Color="Color.Default" />
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.body1">Centura Team Developer 1.x-3.x</MudText>
+                        <MudText Typo="Typo.body1">Datenbank: Informix + DB2</MudText>
+                        <MudText Typo="Typo.body1">Perl: Import/Export/Extrahieren von Daten und Programmierung für Nadel- und PostScript-Drucker</MudText>
+                        <MudText Typo="Typo.body1">C: serielle Anbindung an Laborgeräte</MudText>                        
+                    </MudCardContent>
+                    @*
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">Learn more</MudButton>
+                    </MudCardActions>
+                    *@
+                </MudCard>                
+            
         </ItemContent>
     </MudTimelineItem>    
 </MudTimeline>

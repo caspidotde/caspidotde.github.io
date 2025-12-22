@@ -1,0 +1,53 @@
+﻿@page "/contents"
+@inject IMarkdownService MarkdownService
+
+<PageTitle>.NET net nett</PageTitle>
+
+<h1>Contents</h1>
+
+@foreach (var node in Tree.Nodes)
+{
+    @if (!node.Name.Equals("Songs"))
+    {
+        <MudPaper Class="pa-4 ma-2">
+            <MudList T="string">
+                <MudListSubheader>
+                    <MudText Typo="Typo.h5">@node.Name</MudText>
+                </MudListSubheader>
+
+                @* @anzahl = 0; *@
+                @foreach (var child in node.Children.OrderByDescending(x => x.Index))
+                {
+                    anzahl++;
+
+                    if (anzahl > 3)
+                    {
+                        break;
+                    }
+
+                    var link = $"{child.Category}/{child.Index}";
+                    <MudListItem Expanded
+                                 Icon="@Icons.Material.Filled.Article"
+                                 Text="@($"{child.Index.ToString("D3")} - {child.Title}")"
+                                 Href="@link">
+                    </MudListItem>
+                }
+            </MudList>
+        </MudPaper>
+    }
+}
+
+
+@code
+{
+    ContentTree Tree { get; set; } = new ContentTree();
+
+    int anzahl = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // await Task.Delay(TimeSpan.FromSeconds(1));
+        Tree = await MarkdownService.GetContentTree();
+        StateHasChanged();
+    }
+}

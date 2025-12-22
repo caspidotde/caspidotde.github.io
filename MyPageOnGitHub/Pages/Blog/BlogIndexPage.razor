@@ -1,0 +1,15 @@
+﻿@page "/blog/{Index:int?}"
+
+@using MyPageOnGitHub.BlogContents
+@using MyPageOnGitHub.Code
+
+<TemplateIndexPage 
+    Type="blog"
+    ResourceType="MarkdownResourceType.Blog"
+    Index="@Index" />
+
+@code
+{
+    [Parameter]
+    public int Index { get; set; } = 0;
+}
