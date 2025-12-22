@@ -8,12 +8,12 @@
         TimelinePosition="TimelinePosition.Top">
     <MudTimelineItem Color="Color.Success" Variant="Variant.Filled" Elevation="25" TimelineAlign="TimelineAlign.End">
         <ItemOpposite>
-            <MudText Color="Color.Success" Typo="Typo.h6">2003-heute</MudText>
+            <MudText Color="Color.Primary" Typo="Typo.h6">2003-heute</MudText>
             <MudText Color="Color.Dark" Typo="Typo.body2">Softwareentwicklung rund um Pannenhilfe Service</MudText>
         </ItemOpposite>
         <ItemContent>
                 <MudCard>
-                    <MudCardHeader>
+                    <MudCardHeader Style="background-color: lightblue;">
                         <CardHeaderContent>
                             <MudText Typo="Typo.h6">Kunden- und Auftragsverwaltung, Schnittstellenprogrammierung</MudText>
                             <MudText Typo="Typo.body2"></MudText>
@@ -23,13 +23,28 @@
                         </CardHeaderActions>
                     </MudCardHeader>
                     <MudCardContent>
-                        <MudText Typo="Typo.body1">Gupta Team Developer 7.x</MudText>
-                        <MudText Typo="Typo.body1">C#: Web API und Webapplikation, Import/Export zu anderen Systemen</MudText>
-                        <MudText Typo="Typo.overline">- Blazor, Razor Pages, ASP.NET MVC, SignalR, CQRS, OpenTelemetry, OpenAPI</MudText>
-                        <MudText Typo="Typo.body1">Datenbank: MS SQL</MudText>
-                        <MudText Typo="Typo.body1">Linux: Docker + traefik Proxy mit Nginx/PHP/... für Fremdsoftware</MudText>
-                        <MudText Typo="Typo.body1">PHP, JavaScript: Support für Fremdsoftware</MudText>
-                        <MudText Typo="Typo.overline">- WordPress, Drupal, xt-Commerce/modified eCommerce</MudText>
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
+                            <MudText Typo="Typo.body1">Gupta Team Developer 7.x</MudText>
+                            <MudText Typo="Typo.overline">low-code software development tool</MudText>
+                        </MudAlert>
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
+                            <MudText Typo="Typo.body1">C#: Web API und Webapplikation, Import/Export zu anderen Systemen</MudText>
+                            <MudText Typo="Typo.overline">Blazor, Razor Pages, ASP.NET MVC, SignalR, CQRS, OpenTelemetry, OpenAPI</MudText>
+                        </MudAlert>
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
+                            <MudText Typo="Typo.body1">Datenbank: MS SQL</MudText>
+                            <MudText Typo="Typo.overline"></MudText>
+                        </MudAlert>
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
+                            <MudText Typo="Typo.body1">Web-Server: Linux + Windows Server</MudText>
+                            <MudText Typo="Typo.overline">Windows Server mit IIS</MudText>
+                            <MudText Typo="Typo.overline">Linux mit Docker + traefik Proxy mit Nginx/PHP/... für Fremdsoftware</MudText>
+                        </MudAlert>
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
+                            <MudText Typo="Typo.body1">PHP, JavaScript: Support für Fremdsoftware</MudText>
+                            <MudText Typo="Typo.overline">- WordPress, Drupal, xt-Commerce/modified eCommerce</MudText>
+                        </MudAlert>
+
                     </MudCardContent>
                     @*
                     <MudCardActions>
@@ -42,12 +57,12 @@
     </MudTimelineItem>
     <MudTimelineItem Color="Color.Default" Variant="Variant.Filled" Elevation="25" TimelineAlign="TimelineAlign.End">
         <ItemOpposite>
-            <MudText Color="Color.Default" Typo="Typo.h6">1999-2003</MudText>
+            <MudText Color="Color.Primary" Typo="Typo.h6">1999-2003</MudText>
             <MudText Color="Color.Dark" Typo="Typo.body2">Softwareentwicklung für med. Labore</MudText>
         </ItemOpposite>
         <ItemContent>
                 <MudCard>
-                    <MudCardHeader>
+                    <MudCardHeader Style="background-color: lightblue;">
                         <CardHeaderContent>
                             <MudText Typo="Typo.h6">Schlaflabore und Labore für Blutuntersuchung</MudText>
                             <MudText Typo="Typo.body2">DRG, LDT, Lesegerät für KVK, ...</MudText>
@@ -57,10 +72,13 @@
                         </CardHeaderActions>
                     </MudCardHeader>
                     <MudCardContent>
-                        <MudText Typo="Typo.body1">Centura Team Developer 1.x-3.x</MudText>
-                        <MudText Typo="Typo.body1">Datenbank: Informix + DB2</MudText>
-                        <MudText Typo="Typo.body1">Perl: Import/Export/Extrahieren von Daten und Programmierung für Nadel- und PostScript-Drucker</MudText>
-                        <MudText Typo="Typo.body1">C: serielle Anbindung an Laborgeräte</MudText>                        
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Text" NoIcon="true" Elevation="5">
+                            <MudText Typo="Typo.body1">Centura Team Developer 1.x-3.x</MudText>
+                            <MudText Typo="Typo.body1">Datenbank: Informix + DB2</MudText>
+                            <MudText Typo="Typo.body1">Perl: Import/Export/Extrahieren von Daten und Programmierung für Nadel- und PostScript-Drucker</MudText>
+                            <MudText Typo="Typo.body1">C: serielle Anbindung an Laborgeräte</MudText>
+                        </MudAlert>
+                                             
                     </MudCardContent>
                     @*
                     <MudCardActions>
