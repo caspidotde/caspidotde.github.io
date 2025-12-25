@@ -1,12 +1,12 @@
-<!-- C# u.a. -->
+<!-- C# Console App -->
 
 ##### Console App mit Serilog und OpenTelemetry Sink konfigurieren
-###### 
 
 ````csharp
 var builder = Host.CreateApplicationBuilder(args);
 
-var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddUserSecrets<Program>()
     .Build();
 
@@ -15,66 +15,145 @@ Log.Logger = new LoggerConfiguration()
    .ReadFrom.Configuration(configuration)
    .WriteTo.OpenTelemetry(x =>
    {
-       x.Endpoint = "http://seqServer:5341/ingest/otlp/v1/logs";
+       x.Endpoint = "http://<<seqServer>>:5341/ingest/otlp/v1/logs";
        x.Protocol = OtlpProtocol.HttpProtobuf;
        x.Headers = new Dictionary<string, string> { ["X-Seq-ApiKey"] = "xxxYYzz" };
        x.ResourceAttributes = new Dictionary<string, object>
        {
-           ["service.name"] = "SomeJob",
+           ["service.name"] = "MyApp",
             ...
        };
    })
    .CreateLogger();
+
+builder.Configuration.AddConfiguration(configuration);
+
+// ILoggerFactory für Programm.cs
+builder.Services.AddSingleton<ILoggerFactory>(new LoggerFactory().AddSerilog(dispose: true));
+
+// DI mit ILogger<T> für die jeweiligen Services etc. weitere Klassen
+builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+
+var container = new Container();
+container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+container.Register(...);
+
+builder.Services.AddSimpleInjector(container);
+
+var host = builder.Build().UseSimpleInjector(container);
+
+host.Run();
+
 ````
 
-#### Import-Batch mit SimpleInjector und Factory Pattern realisieren
+###### Arbeiten mit BackgroundService
+
 ````csharp
 
-container.Register<ImportJob01>(Lifestyle.Transient);
-container.Register<ImportJob02>(Lifestyle.Transient);
-...
+builder.Services.AddHostedService<SomeService>();
+var app = builder.Build();
+app.Run();
 
-container.RegisterInstance<IImportFactory>(new ImportFactory(container)
+public class SomeService: BackgroundService
 {
-    { "job01", typeof(ImportJob01) },
-    { "job02", typeof(ImportJob02) },
-    ...
-});
+    public SomeService() { ... }
 
-var factory = container.GetInstance<IImportFactory>();
-using (Scope scope = AsyncScopedLifestyle.BeginScope(container))
-{
-    var import = factory.CreateImportJob(importParameter.ToUpper());
-
-    foreach (var file in import.GetImportFiles())
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        import.ProcessFile(file);
+        // Immer wieder die Aufgabe ausführen bis der Dienst gestoppt wird
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            DoWork();
+            await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
+        }
     }
 
-    import.PostProcess();
 }
 
-public interface IImportFactory
-{
-    IBaseImportJob CreateImportJob(string name);
-}
 
-public sealed class ImportFactory : Dictionary<string, Type>, IImportFactory
-{
-    private readonly Container container;
+````
 
-    public ImportFactory(Container container)
+###### oder mit einer IHostedService und man kann Start und Stop explizit steuern
+
+````csharp
+
+builder.Services.AddHostedService<ExportService>();
+
+var host = builder.Build();
+
+// await host.StartAsync();
+// await host.StopAsync();
+
+// oder einfach die Applikation ausführen
+host.Run();
+
+
+public class ExportService: IHostedService
+{
+    public ExportService() { ... }
+
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
-        this.container = container;
+        // Do work
     }
 
-    public void Register<T>(string name) where T : IBaseImportJob
+    public async Task StopAsync(CancellationToken cancellationToken)
     {
-        this.container.Register(typeof(T));
-        this.Add(name, typeof(T));
+        // Cleanup
     }
 
-    public IBaseImportJob CreateImportJob(string name) => (IBaseImportJob)this.container.GetInstance(this[name]);
 }
+
+
+````
+
+###### oder mit einer IHostedLifecycleService und plötzlich hat man sogar Zwischenstufen von Start und Stop
+
+````csharp
+
+builder.Services.AddHostedService<SomeService>();
+
+var app = builder.Build();
+
+app.Run();
+
+
+public class SomeService: IHostedLifecycleService
+{
+    public SomeService() { ... }
+
+    public Task StartAsync(CancellationToken cancellationToken)
+    {   
+        return Task.CompletedTask;        
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {        
+        return Task.CompletedTask;
+    }
+
+    public Task StartedAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task StartingAsync(CancellationToken cancellationToken)        
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task StoppedAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task StoppingAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
+}
+
 
 ````
