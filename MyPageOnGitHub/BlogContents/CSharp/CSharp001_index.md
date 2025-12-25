@@ -28,10 +28,10 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Configuration.AddConfiguration(configuration);
 
-// ILoggerFactory für Programm.cs
+// ILoggerFactory fÃ¼r Programm.cs
 builder.Services.AddSingleton<ILoggerFactory>(new LoggerFactory().AddSerilog(dispose: true));
 
-// DI mit ILogger<T> für die jeweiligen Services etc. weitere Klassen
+// DI mit ILogger<T> fÃ¼r die jeweiligen Services etc. weitere Klassen
 builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
 var container = new Container();
@@ -61,7 +61,7 @@ public class SomeService: BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        // Immer wieder die Aufgabe ausführen bis der Dienst gestoppt wird
+        // Immer wieder die Aufgabe ausfÃ¼hren bis der Dienst gestoppt wird
         while (!stoppingToken.IsCancellationRequested)
         {
             DoWork();
@@ -85,7 +85,7 @@ var host = builder.Build();
 // await host.StartAsync();
 // await host.StopAsync();
 
-// oder einfach die Applikation ausführen
+// oder einfach die Applikation ausfÃ¼hren
 host.Run();
 
 
@@ -108,7 +108,7 @@ public class ExportService: IHostedService
 
 ````
 
-###### oder mit einer IHostedLifecycleService und plötzlich hat man sogar Zwischenstufen von Start und Stop
+###### oder mit einer IHostedLifecycleService und plÃ¶tzlich hat man sogar Zwischenstufen von Start und Stop
 
 ````csharp
 
