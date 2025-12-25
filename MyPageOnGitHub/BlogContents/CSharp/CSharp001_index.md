@@ -79,30 +79,17 @@ public class SomeService: BackgroundService
 ````csharp
 
 builder.Services.AddHostedService<ExportService>();
-
 var host = builder.Build();
-
 // await host.StartAsync();
 // await host.StopAsync();
-
 // oder einfach die Applikation ausführen
 host.Run();
-
 
 public class ExportService: IHostedService
 {
     public ExportService() { ... }
-
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {
-        // Do work
-    }
-
-    public async Task StopAsync(CancellationToken cancellationToken)
-    {
-        // Cleanup
-    }
-
+    public async Task StartAsync(CancellationToken cancellationToken) { ... }
+    public async Task StopAsync(CancellationToken cancellationToken) { ... }
 }
 
 
@@ -113,47 +100,18 @@ public class ExportService: IHostedService
 ````csharp
 
 builder.Services.AddHostedService<SomeService>();
-
 var app = builder.Build();
-
 app.Run();
-
 
 public class SomeService: IHostedLifecycleService
 {
     public SomeService() { ... }
-
-    public Task StartAsync(CancellationToken cancellationToken)
-    {   
-        return Task.CompletedTask;        
-    }
-
-    public Task StopAsync(CancellationToken cancellationToken)
-    {        
-        return Task.CompletedTask;
-    }
-
-    public Task StartedAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
-    }
-
-    public Task StartingAsync(CancellationToken cancellationToken)        
-    {
-        return Task.CompletedTask;
-    }
-
-    public Task StoppedAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
-    }
-
-    public Task StoppingAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
-    }
-
+    public Task StartAsync(CancellationToken cancellationToken) { return Task.CompletedTask; }
+    public Task StopAsync(CancellationToken cancellationToken) { return Task.CompletedTask; }
+    public Task StartedAsync(CancellationToken cancellationToken) { return Task.CompletedTask; }
+    public Task StartingAsync(CancellationToken cancellationToken) { return Task.CompletedTask; }
+    public Task StoppedAsync(CancellationToken cancellationToken) { return Task.CompletedTask; }
+    public Task StoppingAsync(CancellationToken cancellationToken) { return Task.CompletedTask; }
 }
-
 
 ````

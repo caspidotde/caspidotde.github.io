@@ -4,12 +4,9 @@
 
 ````csharp
 var builder = WebApplication.CreateBuilder(args);
-
 // add configuration, logging, services, DI etc.
 .....
-
 var app = builder.Build();
-
 app.Run();
 
 ````
@@ -34,7 +31,6 @@ app.MapHealthChecks("/health");
 // Only health checks tagged with the "live" tag must pass for app to be considered alive
 app.MapHealthChecks("/alive", new HealthCheckOptions { Predicate = r => r.Tags.Contains("live") });
 
-
 ````
 
 ##### mit Authorization/Authentication
@@ -46,7 +42,6 @@ using Microsoft.AspNetCore.Authentication;
 ... 
 
 string corsPolicy = "_myCorsPolicy";
-
 builder.Services.AddCors(options => { options.AddPolicy(corsPolicy, builder => { builder.WithOrigins("xyz"); }); });
 
 // Don't forget to implement your own BasicAuthenticationHandler :)
@@ -55,9 +50,7 @@ builder.Services
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
 builder.Services.AddAuthorization(o => { o.AddPolicy("ApiUserPolicy", b => b.RequireRole("User")); });
-
 ...
-
 app.UseCors(corsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
@@ -69,7 +62,6 @@ app.UseAuthorization();
 ````csharp
 
 using Scalar.AspNetCore;
-
 ... 
 
 builder.Services.AddOpenApi(options =>
@@ -99,7 +91,5 @@ if (app.Environment.IsDevelopment())
         // options.HideDarkModeToggle = false;
     }).RequireAuthorization("ApiUserPolicy");
 }
-
-
 
 ````
