@@ -47,7 +47,7 @@ using Microsoft.AspNetCore.Authentication;
 
 string corsPolicy = "_myCorsPolicy";
 
-builder.Services.AddCors(options => { options.AddPolicy(corsPolicy, builder => { builder.WithOrigins("xyz""); }); });
+builder.Services.AddCors(options => { options.AddPolicy(corsPolicy, builder => { builder.WithOrigins("xyz"); }); });
 
 // Don't forget to implement your own BasicAuthenticationHandler :)
 builder.Services
