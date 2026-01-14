@@ -33,7 +33,35 @@ app.MapHealthChecks("/alive", new HealthCheckOptions { Predicate = r => r.Tags.C
 
 ````
 
-##### Authorization/Authentication
+##### Windows Authentication (Negotiate) und policy based authorization
+
+````csharp
+
+using Microsoft.AspNetCore.Authentication.Negotiate;
+
+builder.Services
+   .AddAuthentication(NegotiateDefaults.AuthenticationScheme)
+   .AddNegotiate();
+
+// Register our custom Authorization handler
+builder.Services.AddSingleton<IAuthorizationHandler, MyAuthorizationHandler>();
+
+// Policies funktionieren scheinbar nur in AuthorizeView und nicht in [Authorize]
+// Overrides the DefaultAuthorizationPolicyProvider with our own
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, MyAuthorizationPolicyProvider>();
+
+builder.Services.AddAuthorization(options =>
+{
+    // Damit auch Blazor-Codes ohne richtige [Authorize] die Default Policy bekommen
+    // Sonst bekommen wir z.B. keinen User.Identity?.Name
+    options.FallbackPolicy = options.DefaultPolicy;
+    ...
+    options.AddPolicy(MyPolicies.Policy01, policy => policy.Requirements.Add(new MyAuthorizationRequirement(MyRequirements.Requirement01)));
+}
+
+````
+
+##### Basic Authentication und policy based authorization
 
 ````csharp
 
@@ -91,5 +119,33 @@ if (app.Environment.IsDevelopment())
         // options.HideDarkModeToggle = false;
     }).RequireAuthorization("ApiUserPolicy");
 }
+
+````
+
+<!-- Minimal API -->
+
+##### Minimal API
+
+````csharp
+
+public static IEndpointRouteBuilder MapNotificationAPI(this IEndpointRouteBuilder app)
+{
+    var callbacksGroup = app.MapGroup("/callbacks");
+
+    callbacksGroup.MapGet("/ping", Pong)
+        .WithName("Ping")
+        .WithSummary("Ping pong")
+        .WithDescription("Ping -> pong")
+        .WithTags("callbacks");
+
+    return app;
+}
+
+    
+public static Ok<string> Pong()
+{
+    return TypedResults.Ok("Pong");
+}
+
 
 ````
