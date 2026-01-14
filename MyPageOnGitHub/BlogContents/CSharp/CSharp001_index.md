@@ -1,17 +1,18 @@
 <!-- C# Console App -->
 
-##### Console App mit Serilog und OpenTelemetry Sink konfigurieren
-
+##### Console App ohne HostApplicationBuilder: IConfiguration, Serilog, OpenTelemetry
 ````csharp
-var builder = Host.CreateApplicationBuilder(args);
 
+// Konfiguration mit appsettings.json und UserSecrets: fast immer sinnvoll
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddUserSecrets<Program>()
     .Build();
 
+// Serilog Logger konfigurieren, hier mit Console Sink und Konfiguration aus appsettings.json
 Log.Logger = new LoggerConfiguration()
    .Enrich.FromLogContext()
+   .WriteTo.Console()
    .ReadFrom.Configuration(configuration)
    .WriteTo.OpenTelemetry(x =>
    {
@@ -25,6 +26,30 @@ Log.Logger = new LoggerConfiguration()
        };
    })
    .CreateLogger();
+
+// ServiceCollection konfigurieren: Microsoft.Extensions.DependencyInjection wird benötigt
+var services = new ServiceCollection();
+services.AddScoped<IConfiguration>(_ => configuration);
+services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+
+// weitere Services registrieren
+services.AddScoped/Singleton/Transient...<IMyService, MyService>();
+
+// da Program gleich hier beginnt, muss der ServiceProvider gebaut werden
+using var servicesProvider = services.BuildServiceProvider();
+var myService = servicesProvider.GetRequiredService<IMyService>();
+
+// Programm starten
+myService.DoSomeStuff();
+
+````
+
+##### Console App mit HostApplicationBuilder: BackgroundService/IHostedService und DI mit SimpleInjector
+
+````csharp
+var builder = Host.CreateApplicationBuilder(args);
+
+// ... 
 
 builder.Configuration.AddConfiguration(configuration);
 
@@ -41,30 +66,43 @@ container.Register(...);
 
 builder.Services.AddSimpleInjector(container);
 
+// Service registrieren: wenn der IHostedService/BackgroundService über DI aufgelöst werden soll
+builder.Services.AddHostedService<MyService>();
+
+// Service registrieren: wenn der IHostedService/BackgroundService manuell erstellt werden soll
+// jobName = args[0];
+// var loggerFactory = new LoggerFactory().AddSerilog(dispose: true);
+// builder.Services.AddHostedService<MyService>(serviceProvider => new MyService(jobName, loggerFactory, configuration, container, ...));
+
 var host = builder.Build().UseSimpleInjector(container);
 
 host.Run();
 
 ````
 
-###### Arbeiten mit BackgroundService
+###### BackgroundService
 
 ````csharp
 
 builder.Services.AddHostedService<SomeService>();
 var app = builder.Build();
-app.Run();
+// async
+await app.RunAsync();
+// oder einfach
+// app.Run();
+
 
 public class SomeService: BackgroundService
 {
     public SomeService() { ... }
 
+    // wenn app.RunAsync aufgerufen wird
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         // Immer wieder die Aufgabe ausführen bis der Dienst gestoppt wird
         while (!stoppingToken.IsCancellationRequested)
         {
-            DoWork();
+            DoSomeWork();
             await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
         }
     }
@@ -74,7 +112,7 @@ public class SomeService: BackgroundService
 
 ````
 
-###### oder mit einer IHostedService und man kann Start und Stop explizit steuern
+###### IHostedService und man kann Start und Stop explizit steuern
 
 ````csharp
 
@@ -95,7 +133,7 @@ public class ExportService: IHostedService
 
 ````
 
-###### oder mit einer IHostedLifecycleService und plötzlich hat man sogar Zwischenstufen von Start und Stop
+###### IHostedLifecycleService: noch mehr Zwischenstufen von Start und Stop
 
 ````csharp
 

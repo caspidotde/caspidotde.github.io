@@ -1,6 +1,6 @@
 ﻿<!-- Import-Batch mit SimpleInjector und Factory Pattern -->
 
-#### Import-Batch mit SimpleInjector und Factory Pattern realisieren
+#### Import-Batch mit SimpleInjector und Factory Pattern
 
 ````csharp
 

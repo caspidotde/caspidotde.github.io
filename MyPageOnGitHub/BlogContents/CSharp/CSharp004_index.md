@@ -1,6 +1,6 @@
 ﻿<!-- C# Web Applikation -->
 
-##### Web Applikation ist zunächst nicht anders als eine Console App
+##### Web Applikation: beginnt auch mit einer WebApplicationBuilder, ähnlich wie bei HostApplicationBuilder
 
 ````csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +12,7 @@ app.Run();
 ````
 
 
-##### Oder doch anders, z.B. mit HealthChecks
+##### HealthChecks
 
 ````csharp
 
@@ -33,7 +33,7 @@ app.MapHealthChecks("/alive", new HealthCheckOptions { Predicate = r => r.Tags.C
 
 ````
 
-##### mit Authorization/Authentication
+##### Authorization/Authentication
 
 ````csharp
 
@@ -57,7 +57,7 @@ app.UseAuthorization();
 
 ````
 
-##### mit OpenAPI und Scalar
+##### OpenAPI und Scalar
 
 ````csharp
 
