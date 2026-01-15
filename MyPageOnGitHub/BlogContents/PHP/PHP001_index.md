@@ -1,6 +1,6 @@
 <!-- PHP: AI muss sein oder? -->
 
-##### PHP-Seite mit Witzen : Slim PHP, Twig View, GuzzleHttp, eigener Ollama-Server
+##### PHP: AI muss sein oder? Dann nutze Slim PHP, Twig View, GuzzleHttp, und einen eigenen Ollama-Server
 ```php
 
 // home.twig
