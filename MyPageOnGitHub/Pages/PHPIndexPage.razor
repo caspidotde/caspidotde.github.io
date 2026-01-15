@@ -1,0 +1,14 @@
+﻿@page "/php/{Index:int?}"
+
+@using MyPageOnGitHub.BlogContents
+@using MyPageOnGitHub.Code
+
+<TemplateIndexPage Type="gupta"
+    ResourceType="MarkdownResourceType.PHP"
+    Index="@Index" />
+
+@code
+{
+    [Parameter]
+    public int Index { get; set; } = 0;
+}

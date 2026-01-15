@@ -17,6 +17,7 @@
 		<EmbeddedResource Include="BlogContents\Help\Help001_index.md" />
 		<EmbeddedResource Include="BlogContents\Blog\Blog001_index.md" />
 		<EmbeddedResource Include="BlogContents\Blog\Blog002_index.md" />
+		<EmbeddedResource Include="BlogContents\PHP\PHP001_index.md" />
 	</ItemGroup>
 	
   <ItemGroup>

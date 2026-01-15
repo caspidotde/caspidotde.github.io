@@ -7,7 +7,8 @@ public enum MarkdownResourceType : byte
     Blog,
     Help,
     Gupta,
-    CSharp
+    CSharp,
+    PHP
 }
 
 public interface IMarkdownService
@@ -32,6 +33,7 @@ public class MarkdownService: IMarkdownService
         MarkdownResourceType.Help => "Help",
         MarkdownResourceType.Gupta => "Gupta",
         MarkdownResourceType.CSharp => "CSharp",
+        MarkdownResourceType.PHP => "PHP",
         _ => throw new ArgumentOutOfRangeException(
             nameof(resourceType), resourceType, 
             $"Unknown {nameof(MarkdownResourceType)}: {resourceType}")
@@ -43,6 +45,7 @@ public class MarkdownService: IMarkdownService
         MarkdownResourceType.Help => string.Format("Help{0}_index", itemIndex.ToString("D3")),
         MarkdownResourceType.Gupta => string.Format("Gupta{0}_index", itemIndex.ToString("D3")),
         MarkdownResourceType.CSharp => string.Format("CSharp{0}_index", itemIndex.ToString("D3")),
+        MarkdownResourceType.PHP => string.Format("PHP{0}_index", itemIndex.ToString("D3")),
         _ => throw new ArgumentOutOfRangeException(
             nameof(resourceType), resourceType, 
             $"Unknown {nameof(MarkdownResourceType)}: {resourceType}")
