@@ -26,7 +26,7 @@
     private ILogger Logger => LoggerFactory.CreateLogger<TemplateIndexPage>();
 
     ContentTree Tree { get; set; } = new ContentTree();
-    int LastIndex = 0;
+    int LastIndex = 1;
 
     protected override async Task OnInitializedAsync()
     {

@@ -54,27 +54,10 @@ public class MarkdownService: IMarkdownService
 
     public async Task<string> GetBlogEntryAsync(MarkdownResourceType resourceType, int itemIndex)
     {
-        var tree = await GetContentTree();
-        var currentNode = tree.Nodes
-            .Where(w => w.Name.Equals(getResourceDirectory(resourceType)))
-            .FirstOrDefault();
-
-        if (currentNode == null)
+        if (itemIndex < 1 || itemIndex > 999)
         {
             return await GetBlogEntryAsync(resourceType, 1);
-        }
-
-        var lastIndex = currentNode.Children.Max(m => m.Index);
-
-        if (itemIndex < 1)
-        {
-            return await GetBlogEntryAsync(resourceType, lastIndex);
-        }
-
-        if (itemIndex > lastIndex)
-        {
-            return await GetBlogEntryAsync(resourceType, lastIndex);
-        }
+        }        
 
         var resourceDirectory = getResourceDirectory(resourceType);
         var resourceName = getResourceName(resourceType, itemIndex);
