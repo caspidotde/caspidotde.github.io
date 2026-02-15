@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Xml.Linq;
 
 namespace MyPageOnGitHub.Code;
 
@@ -55,7 +56,18 @@ public class MarkdownService: IMarkdownService
     {
         if (itemIndex < 1 || itemIndex > 999)
         {
-            return await GetBlogEntryAsync(resourceType, 1);
+            var tree = await GetContentTree();
+            var currentNode = tree.Nodes
+                .Where(w => w.Name.Equals(getResourceDirectory(resourceType)))
+                .FirstOrDefault();
+
+            if (currentNode == null)
+            {
+                return await GetBlogEntryAsync(resourceType, 1);
+            }
+
+            var lastIndex = currentNode.Children.Max(m => m.Index);
+            return await GetBlogEntryAsync(resourceType, lastIndex);
         }
 
         var resourceDirectory = getResourceDirectory(resourceType);
