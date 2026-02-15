@@ -73,7 +73,7 @@ public class MarkdownService: IMarkdownService
 
         foreach (var resourceName in resourceNames)
         {
-            _logger.LogInformation("Resource: {ResourceName}", resourceName);
+            // _logger.LogInformation("Resource: {ResourceName}", resourceName);
 
             var parts = resourceName.Split('.');
             if (parts.Length >= 4 && parts[parts.Length - 1] == "md")
@@ -91,7 +91,7 @@ public class MarkdownService: IMarkdownService
 
                 if (!tree.Nodes.Any(n => n.Name.Equals(item.Category)))
                 {
-                    _logger.LogWarning("New Category: {Category}", item.Category);
+                    // _logger.LogWarning("New Category: {Category}", item.Category);
                     tree.Nodes.Add(new ContentTreeNode { Name = item.Category });
                 }
 

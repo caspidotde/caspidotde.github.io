@@ -1,5 +1,6 @@
 ﻿@page "/contents"
 @inject IMarkdownService MarkdownService
+@inject ILoggerFactory LoggerFactory
 
 <PageTitle>.NET net nett</PageTitle>
 
@@ -42,11 +43,14 @@
 {
     ContentTree Tree { get; set; } = new ContentTree();
 
+    private ILogger Logger => LoggerFactory.CreateLogger<ContentsPage>();
+
     int anzahl = 0;
 
     protected override async Task OnInitializedAsync()
     {
         // await Task.Delay(TimeSpan.FromSeconds(1));
+        // Logger.LogDebug("ContentsPage - OnInitializedAsync: Loading content tree...");
         Tree = await MarkdownService.GetContentTree();
         StateHasChanged();
     }

@@ -31,6 +31,8 @@
     protected override async Task OnInitializedAsync()
     {
         // await Task.Delay(TimeSpan.FromSeconds(1));
+        // Logger.LogDebug("TemplateIndexPage - OnInitializedAsync: Loading content tree...");
+
         Tree = await MarkdownService.GetContentTree();
         var currentNode = Tree.Nodes
             .Where(w => w.Name.ToLower().Equals(Type))
