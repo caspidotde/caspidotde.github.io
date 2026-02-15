@@ -23,13 +23,46 @@ using FFMpegCore.Enums;
 using NAudio.Wave;
 using Whisper.net;
 
-if (args.Length == 0)
+if (args.Length < 3)
 {
     Console.WriteLine("Bitte den Pfad zur Video- oder Audio-Datei angeben.");
+	Console.WriteLine();
+    Console.WriteLine("*********************************************************************");
+    Console.WriteLine("    Usage: dotnet run whisper.cs <de|en> <1-10> pathToMediaFile      ");
+	Console.WriteLine("    1: ggml-large-v3                            3.0 GB               ");
+	Console.WriteLine("    2: ggml-large-v2-q8_0                       1.6 GB               ");
+	Console.WriteLine("    3: ggml-large-v3-turbo                      1.5 GB               ");
+	Console.WriteLine("    4: whisper-large-v3-turbo-german-ggml       1.5 GB               ");
+	Console.WriteLine("    5: ggml-medium-GermanMed-full-f16           1.5 GB               ");
+	Console.WriteLine("    6: ggml-large-v3-q5_0                       1.0 GB               ");
+	Console.WriteLine("    7: ggml-large-v3-turbo-q8_0                 850 MB               ");
+	Console.WriteLine("    8: ggml-medium-q8_0                         800 MB               ");
+	Console.WriteLine("    9: ggml-tiny-german-1224-f16                 75 MB               ");
+	Console.WriteLine("   10: ggml-tiny-german-f16                      75 MB               ");
+    Console.WriteLine("*********************************************************************");
     return;
 }
 
-var mediaFilePath = args[0];
+var language = args[0];
+if (!language.ToLower().Equals("de")) language = "en";
+
+var modelNum = args[1];
+var model = modelNum.ToLower() switch
+{
+    "1"  => "ggml-large-v3.bin",
+    "2"  => "ggml-large-v2-q8_0.bin",
+	"3"  => "ggml-large-v3-turbo.bin",
+	"4"  => "whisper-large-v3-turbo-german-ggml.bin",
+	"5"  => "ggml-medium-GermanMed-full-f16.bin",
+	"6"  => "ggml-large-v3-q5_0.bin",
+	"7"  => "ggml-large-v3-turbo-q8_0.bin",
+	"8"  => "ggml-medium-q8_0.bin",
+	"9"  => "ggml-tiny-german-1224-f16.bin",
+	// "10" => "ggml-tiny-german-f16.bin",
+    _ => "ggml-tiny-german-f16.bin"
+};
+
+var mediaFilePath = args[2];
 
 if (!File.Exists(mediaFilePath))
 {
@@ -40,6 +73,9 @@ if (!File.Exists(mediaFilePath))
 Console.WriteLine("Datei gefunden: " + mediaFilePath);
 var mediaInfo = await FFProbe.AnalyseAsync(mediaFilePath);
 Console.WriteLine($"Dauer: {mediaInfo.Duration}");
+
+Console.WriteLine("Sprache: " + language);
+Console.WriteLine("Modell: " + model);
 
 // Erstellen eines temporären Pfads für die extrahierte Audiodatei
 var tempAudioFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".wav");
@@ -67,13 +103,14 @@ try
     
     string ggmlPath = "../../Data/Ggml";
 
-    // string filePath = $"{ggmlPath}/ggml-large-v3-turbo.bin";
-    // string filePath = $"{ggmlPath}/ggml-large-v3.bin";
-    string filePath = $"{ggmlPath}/whisper-large-v3-turbo-german-ggml.bin";
+	// string filePath = $"{ggmlPath}/ggml-large-v3.bin";
+    // string filePath = $"{ggmlPath}/ggml-large-v3-turbo.bin";    
+    // string filePath = $"{ggmlPath}/whisper-large-v3-turbo-german-ggml.bin";
+	string filePath = $"{ggmlPath}/{model}";
 
     // Initialisieren des Whisper-Prozessors mit der angegebenen Modell-Datei und Spracheinstellung
     using var whisperFactory = WhisperFactory.FromPath(filePath);
-    using var processor = whisperFactory.CreateBuilder().WithLanguage("de").Build();
+    using var processor = whisperFactory.CreateBuilder().WithLanguage(language).Build();
 
     foreach (var i in Enumerable.Range(0, segmentCount))
     {

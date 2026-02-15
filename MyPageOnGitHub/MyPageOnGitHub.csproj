@@ -14,10 +14,12 @@
 		<EmbeddedResource Include="BlogContents\CSharp\CSharp005_index.md" />		
 		<EmbeddedResource Include="BlogContents\CSharp\CSharp006_index.md" />
 		<EmbeddedResource Include="BlogContents\CSharp\CSharp007_index.md" />
+		<EmbeddedResource Include="BlogContents\Gupta\Gupta002_index.md" />
 		<EmbeddedResource Include="BlogContents\Gupta\Gupta001_index.md" />
 		<EmbeddedResource Include="BlogContents\Help\Help001_index.md" />
 		<EmbeddedResource Include="BlogContents\Blog\Blog001_index.md" />
 		<EmbeddedResource Include="BlogContents\Blog\Blog002_index.md" />
+		<EmbeddedResource Include="BlogContents\PHP\PHP002_index.md" />
 		<EmbeddedResource Include="BlogContents\PHP\PHP001_index.md" />
 	</ItemGroup>
 	
