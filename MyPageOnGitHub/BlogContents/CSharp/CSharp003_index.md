@@ -1,6 +1,6 @@
 ﻿<!-- Factory Pattern für QueryHandler -->
 
-#### Factory Pattern für QueryHandler
+##### Factory Pattern für QueryHandler
 
 ````csharp
 
