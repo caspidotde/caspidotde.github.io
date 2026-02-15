@@ -73,7 +73,7 @@ public class MarkdownService: IMarkdownService
 
         if (itemIndex > lastIndex)
         {
-            return await GetBlogEntryAsync(resourceType, 1);
+            return await GetBlogEntryAsync(resourceType, lastIndex);
         }
 
         var resourceDirectory = getResourceDirectory(resourceType);

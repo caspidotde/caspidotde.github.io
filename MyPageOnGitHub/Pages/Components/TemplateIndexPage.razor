@@ -3,6 +3,7 @@
 
 @inject ILoggerFactory LoggerFactory
 @inject NavigationManager NavigationManager
+@inject IMarkdownService MarkdownService
 
 <MudStack Row="true">
     <MudFab Size="Size.Small" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ChevronLeft" OnClick="GoBack" />
@@ -24,19 +25,39 @@
 
     private ILogger Logger => LoggerFactory.CreateLogger<TemplateIndexPage>();
 
+    ContentTree Tree { get; set; } = new ContentTree();
+    int LastIndex = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // await Task.Delay(TimeSpan.FromSeconds(1));
+        Tree = await MarkdownService.GetContentTree();
+        var currentNode = Tree.Nodes
+            .Where(w => w.Name.ToLower().Equals(Type))
+            .FirstOrDefault();
+
+        LastIndex = currentNode!.Children.Max(m => m.Index);
+
+        StateHasChanged();
+    }
+
     private void GoBack()
     {
-        if (Index > 1)
+        Index--;
+
+        if (Index < 1)
         {
-            Index--;
-            NavigationManager.NavigateTo($"/{Type}/{Index}", false);
+            Index = LastIndex;
         }
+
+        NavigationManager.NavigateTo($"/{Type}/{Index}", false);
     }
 
     private void GoForward()
     {
         Index++;
-        if (Index > 999) Index = 1;
+
+        if (Index > LastIndex) Index = 1;
         NavigationManager.NavigateTo($"/{Type}/{Index}", false);
     }
 }
