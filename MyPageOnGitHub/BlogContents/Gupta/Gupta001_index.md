@@ -44,4 +44,4 @@ Function: GetAJokeFromOpenrouter
 
 ````
 
-![Beispielbild](~/images/Screenshot_Gupta_GetAJoke.png)
+![Beispielbild](/images/Screenshot_Gupta_GetAJoke.png)
