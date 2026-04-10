@@ -41,4 +41,39 @@ public function __invoke(Request $request, Response $response): Response
         return $this->twig->render($response, 'home.twig', $viewData);
 }
 
+// or use openrouter as as alternative to ollama
+
+public function GetAJoke(): string
+{
+
+	$body = "";
+    $model = "openrouter/free";
+
+    $client = new Client();
+    try {            
+	    $responseGuzzleClient = $client->post(
+            'https://openrouter.ai/api/v1/chat/completions',
+            [
+                'json' => [                        
+                    'messages' => [ [ 'role' => 'user', 'content' => 'Please tell me another joke.' ] ],
+                    'model' => $model
+                ],
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer YOUR_OPENROUTER_API_KEY'
+                ]
+		    ]
+	    ); 
+
+        $bodyJson = json_decode($responseGuzzleClient->getBody());
+        $body = $bodyJson->choices[0]->message->content ?? '';
+
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
+        $this->logger->info($e->getMessage());
+    }  
+
+    return $body;
+}
+
+
 ```
