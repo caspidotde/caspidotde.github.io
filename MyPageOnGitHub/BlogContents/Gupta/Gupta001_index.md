@@ -33,9 +33,6 @@ Function: GetAJokeFromOpenrouter
 		Set arrHeaders[1,0] = "Authorization"
 		Set arrHeaders[1,1] = "Bearer " || strOpenrouterAPIKey
 		!
-		Set arrParams[0,0] = ""
-		Set arrParams[0,1] = ""
-		!
 		If SalJSONSerializeUDVEx( "aRequest", strOpenrouterUrl, HTTP_POST, strResult, "", "", arrHeaders, arrParams, strError )
 			If SalJSONDeserializeUDV( "aResponse", strResult, "", "", strError )
 				Return aResponse.choices[0].message.content
