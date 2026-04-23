@@ -11,10 +11,7 @@ builder.Services.AddSignalR();
 builder.Services.AddHostedService<MQTTBackgroundService>();
 builder.Services.AddCors();
 ...
-app.UseCors(policy => policy
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowAnyOrigin());
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.MapHub<NotificationHub>("/notificationHub");
 
 ````
@@ -28,11 +25,8 @@ public class NotificationHub: Hub<INotificationClient>
 {
     public override async Task OnConnectedAsync()
     {
-        await Clients.Client(Context.ConnectionId)
-            .ReceiveNotification(
-            "Connection", 
+        await Clients.Client(Context.ConnectionId).ReceiveNotification("Connection", 
             $"You are connected to the notification hub: {Context.User?.Identity?.Name}");
-
         await base.OnConnectedAsync();
     }
 }
@@ -55,8 +49,6 @@ public class MQTTMessage
 ````csharp
 
 // MQTTBackgroundService.cs
-
-public record ChannelRequest(string Topic, string Message);
 
 public class MQTTBackgroundService: IHostedService
 {
@@ -81,7 +73,7 @@ public class MQTTBackgroundService: IHostedService
         mqttClient.ApplicationMessageReceivedAsync += MqttApplicationMessageReceivedAsync;
 
         mqttClientOptions = new MqttClientOptionsBuilder()
-            .WithTcpServer({{serverIP}})
+            .WithTcpServer({{mqttServerIP}})
             .Build();        
     }
 
@@ -97,7 +89,6 @@ public class MQTTBackgroundService: IHostedService
     {
         _logger.LogInformation("MQTT Background Service is started.");
         var response = await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
-        _logger.LogTrace("MQTT Connected");
 
         var mqttSubscribeOptions = mqttFactory.CreateSubscribeOptionsBuilder()
             .WithTopicFilter(f => { f.WithTopic("myTopic"); })
@@ -110,10 +101,7 @@ public class MQTTBackgroundService: IHostedService
     {
         _logger.LogInformation("MQTT Background Service is stopping.");
         
-        var mqttSubscribeOptions = mqttFactory.CreateUnsubscribeOptionsBuilder()
-            .WithTopicFilter("myTopic")            
-            .Build();
-
+        var mqttSubscribeOptions = mqttFactory.CreateUnsubscribeOptionsBuilder().WithTopicFilter("myTopic").Build();
         await mqttClient.UnsubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
 
         var mqttClientDisconnectOptions = mqttFactory.CreateClientDisconnectOptionsBuilder().Build();
@@ -157,14 +145,11 @@ public class MQTTBackgroundService: IHostedService
     {
         logger = loggerFactory.CreateLogger<TestPage>();
 
-        messages = new List<MQTTMessage>()
-        {
-            new MQTTMessage() {Topic = "TestPage", Message = "Test message"}
-        };
+        messages = new List<MQTTMessage>() { new MQTTMessage() {Topic = "TestPage", Message = "Test message"}};
 
         var applicationUrl = configuration.GetValue<string>("YourApp:ApplicationUrl") ?? "";
         var hubUrl = $"{applicationUrl}notificationHub";        
-        logger.LogInformation(hubUrl);
+        // logger.LogInformation(hubUrl);
 
         _hubConnection = new HubConnectionBuilder()
             .WithUrl(hubUrl, options =>
@@ -175,7 +160,7 @@ public class MQTTBackgroundService: IHostedService
             .WithAutomaticReconnect()
             .Build();
 
-        logger.LogInformation(_hubConnection.ConnectionId);
+        // logger.LogInformation(_hubConnection.ConnectionId);
 
         _hubConnection.On<string, string>("ReceiveNotification", (topic, message) =>
         {
