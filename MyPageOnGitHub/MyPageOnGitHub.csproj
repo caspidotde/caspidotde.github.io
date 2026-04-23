@@ -12,7 +12,8 @@
 		<EmbeddedResource Include="BlogContents\CSharp\CSharp003_index.md" />
 		<EmbeddedResource Include="BlogContents\CSharp\CSharp004_index.md" />
 		<EmbeddedResource Include="BlogContents\CSharp\CSharp005_index.md" />		
-		<EmbeddedResource Include="BlogContents\CSharp\CSharp006_index.md" />
+		<EmbeddedResource Include="BlogContents\CSharp\CSharp006_index.md" />		
+		<EmbeddedResource Include="BlogContents\CSharp\CSharp008_index.md" />
 		<EmbeddedResource Include="BlogContents\CSharp\CSharp007_index.md" />
 		<EmbeddedResource Include="BlogContents\Gupta\Gupta002_index.md" />
 		<EmbeddedResource Include="BlogContents\Gupta\Gupta001_index.md" />
